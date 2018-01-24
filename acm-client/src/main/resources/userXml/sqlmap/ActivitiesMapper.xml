@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ActivitiesMapper">
+	<resultMap id="BaseResultMap" type="cn.aegisa.acm.model.Activities">
+		<id column="aid" property="aid" jdbcType="INTEGER" />
+		<result column="activity_bus" property="activityBus" jdbcType="VARCHAR" />
+		<result column="activity_date" property="activityDate" jdbcType="TIMESTAMP" />
+		<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+		<result column="activity_price" property="activityPrice" jdbcType="INTEGER" />
+		<result column="day_count" property="dayCount" jdbcType="VARCHAR" />
+		<result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+		<result column="in_use" property="inUse" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="aid != null"> and aid= #{aid}</if>	
+		<if test="activityBus != null and activityBus !=''"> and activity_bus= #{activityBus}</if>
+		<if test="activityDate != null"> and activity_date= #{activityDate}</if>	
+		<if test="activityName != null and activityName !=''"> and activity_name= #{activityName}</if>
+		<if test="activityPrice != null"> and activity_price= #{activityPrice}</if>	
+		<if test="dayCount != null and dayCount !=''"> and day_count= #{dayCount}</if>
+		<if test="endDate != null"> and end_date= #{endDate}</if>	
+		<if test="inUse != null and inUse !=''"> and in_use= #{inUse}</if>
+	</sql>
+	<sql id="Base_Column_List">
+		aid ,
+		activity_bus ,
+		activity_date ,
+		activity_name ,
+		activity_price ,
+		day_count ,
+		end_date ,
+		in_use 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from activities
+		where
+		aid = #{aid,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from activities
+		where
+		aid = #{aid,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insertSelective" parameterType="cn.aegisa.acm.model.Activities">
+		insert into activities
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="aid != null">aid,</if>	
+			<if test="activityBus != null and activityBus !=''">activity_bus,</if>
+			<if test="activityDate != null">activity_date,</if>	
+			<if test="activityName != null and activityName !=''">activity_name,</if>
+			<if test="activityPrice != null">activity_price,</if>	
+			<if test="dayCount != null and dayCount !=''">day_count,</if>
+			<if test="endDate != null">end_date,</if>	
+			<if test="inUse != null and inUse !=''">in_use,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="aid != null">
+				#{aid,jdbcType=INTEGER},
+			</if>
+			<if test="activityBus != null and activityBus !=''">
+				#{activityBus,jdbcType=VARCHAR},
+			</if>
+			<if test="activityDate != null">
+				#{activityDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="activityName != null and activityName !=''">
+				#{activityName,jdbcType=VARCHAR},
+			</if>
+			<if test="activityPrice != null">
+				#{activityPrice,jdbcType=INTEGER},
+			</if>
+			<if test="dayCount != null and dayCount !=''">
+				#{dayCount,jdbcType=VARCHAR},
+			</if>
+			<if test="endDate != null">
+				#{endDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inUse != null and inUse !=''">
+				#{inUse,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.aegisa.acm.model.Activities">
+		update activities
+		<set>
+			<if test="activityBus != null and activityBus !=''">
+				activity_bus= #{activityBus,jdbcType=VARCHAR},
+			</if>
+			<if test="activityDate != null">
+				activity_date= #{activityDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="activityName != null and activityName !=''">
+				activity_name= #{activityName,jdbcType=VARCHAR},
+			</if>
+			<if test="activityPrice != null">
+				activity_price= #{activityPrice,jdbcType=INTEGER},
+			</if>
+			<if test="dayCount != null and dayCount !=''">
+				day_count= #{dayCount,jdbcType=VARCHAR},
+			</if>
+			<if test="endDate != null">
+				end_date= #{endDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inUse != null and inUse !=''">
+				in_use= #{inUse,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		aid = #{aid,jdbcType=INTEGER}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from activities where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from activities where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from activities where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from activities where aid in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

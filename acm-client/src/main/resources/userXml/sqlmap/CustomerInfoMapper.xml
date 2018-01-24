@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CustomerInfoMapper">
+	<resultMap id="BaseResultMap" type="cn.aegisa.acm.model.CustomerInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+		<result column="customer_nickname" property="customerNickname" jdbcType="VARCHAR" />
+		<result column="customer_phone" property="customerPhone" jdbcType="VARCHAR" />
+		<result column="customer_id" property="customerId" jdbcType="INTEGER" />
+		<result column="customer_comment" property="customerComment" jdbcType="VARCHAR" />
+		<result column="customer_address" property="customerAddress" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="id != null"> and id= #{id}</if>	
+		<if test="customerName != null and customerName !=''"> and customer_name= #{customerName}</if>
+		<if test="customerNickname != null and customerNickname !=''"> and customer_nickname= #{customerNickname}</if>
+		<if test="customerPhone != null and customerPhone !=''"> and customer_phone= #{customerPhone}</if>
+		<if test="customerId != null"> and customer_id= #{customerId}</if>	
+		<if test="customerComment != null and customerComment !=''"> and customer_comment= #{customerComment}</if>
+		<if test="customerAddress != null and customerAddress !=''"> and customer_address= #{customerAddress}</if>
+	</sql>
+	<sql id="Base_Column_List">
+		id ,
+		customer_name ,
+		customer_nickname ,
+		customer_phone ,
+		customer_id ,
+		customer_comment ,
+		customer_address 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from customer_info
+		where
+		id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from customer_info
+		where
+		id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insertSelective" parameterType="cn.aegisa.acm.model.CustomerInfo">
+		insert into customer_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>	
+			<if test="customerName != null and customerName !=''">customer_name,</if>
+			<if test="customerNickname != null and customerNickname !=''">customer_nickname,</if>
+			<if test="customerPhone != null and customerPhone !=''">customer_phone,</if>
+			<if test="customerId != null">customer_id,</if>	
+			<if test="customerComment != null and customerComment !=''">customer_comment,</if>
+			<if test="customerAddress != null and customerAddress !=''">customer_address,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="customerName != null and customerName !=''">
+				#{customerName,jdbcType=VARCHAR},
+			</if>
+			<if test="customerNickname != null and customerNickname !=''">
+				#{customerNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="customerPhone != null and customerPhone !=''">
+				#{customerPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="customerId != null">
+				#{customerId,jdbcType=INTEGER},
+			</if>
+			<if test="customerComment != null and customerComment !=''">
+				#{customerComment,jdbcType=VARCHAR},
+			</if>
+			<if test="customerAddress != null and customerAddress !=''">
+				#{customerAddress,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.aegisa.acm.model.CustomerInfo">
+		update customer_info
+		<set>
+			<if test="customerName != null and customerName !=''">
+				customer_name= #{customerName,jdbcType=VARCHAR},
+			</if>
+			<if test="customerNickname != null and customerNickname !=''">
+				customer_nickname= #{customerNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="customerPhone != null and customerPhone !=''">
+				customer_phone= #{customerPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="customerId != null">
+				customer_id= #{customerId,jdbcType=INTEGER},
+			</if>
+			<if test="customerComment != null and customerComment !=''">
+				customer_comment= #{customerComment,jdbcType=VARCHAR},
+			</if>
+			<if test="customerAddress != null and customerAddress !=''">
+				customer_address= #{customerAddress,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from customer_info where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from customer_info where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from customer_info where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from customer_info where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>
