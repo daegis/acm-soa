@@ -17,7 +17,7 @@ public class CustomerInfo implements Serializable{
 	
 	private String customerPhone;
 	
-	private Integer customerId;
+	private String customerId;
 	
 	private String customerComment;
 	
@@ -61,11 +61,11 @@ public class CustomerInfo implements Serializable{
 	}
 		
 		
-	public void setCustomerId(Integer value) {
+	public void setCustomerId(String value) {
 		this.customerId = value;
 	}
 	
-	public Integer getCustomerId() {
+	public String getCustomerId() {
 		return this.customerId;
 	}
 		

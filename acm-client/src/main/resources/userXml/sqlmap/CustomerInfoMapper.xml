@@ -6,7 +6,7 @@
 		<result column="customer_name" property="customerName" jdbcType="VARCHAR" />
 		<result column="customer_nickname" property="customerNickname" jdbcType="VARCHAR" />
 		<result column="customer_phone" property="customerPhone" jdbcType="VARCHAR" />
-		<result column="customer_id" property="customerId" jdbcType="INTEGER" />
+		<result column="customer_id" property="customerId" jdbcType="VARCHAR" />
 		<result column="customer_comment" property="customerComment" jdbcType="VARCHAR" />
 		<result column="customer_address" property="customerAddress" jdbcType="VARCHAR" />
 	</resultMap>
@@ -15,7 +15,7 @@
 		<if test="customerName != null and customerName !=''"> and customer_name= #{customerName}</if>
 		<if test="customerNickname != null and customerNickname !=''"> and customer_nickname= #{customerNickname}</if>
 		<if test="customerPhone != null and customerPhone !=''"> and customer_phone= #{customerPhone}</if>
-		<if test="customerId != null"> and customer_id= #{customerId}</if>	
+		<if test="customerId != null and customerId !=''"> and customer_id= #{customerId}</if>
 		<if test="customerComment != null and customerComment !=''"> and customer_comment= #{customerComment}</if>
 		<if test="customerAddress != null and customerAddress !=''"> and customer_address= #{customerAddress}</if>
 	</sql>
@@ -50,7 +50,7 @@
 			<if test="customerName != null and customerName !=''">customer_name,</if>
 			<if test="customerNickname != null and customerNickname !=''">customer_nickname,</if>
 			<if test="customerPhone != null and customerPhone !=''">customer_phone,</if>
-			<if test="customerId != null">customer_id,</if>	
+			<if test="customerId != null and customerId !=''">customer_id,</if>
 			<if test="customerComment != null and customerComment !=''">customer_comment,</if>
 			<if test="customerAddress != null and customerAddress !=''">customer_address,</if>
 		</trim>
@@ -67,8 +67,8 @@
 			<if test="customerPhone != null and customerPhone !=''">
 				#{customerPhone,jdbcType=VARCHAR},
 			</if>
-			<if test="customerId != null">
-				#{customerId,jdbcType=INTEGER},
+			<if test="customerId != null and customerId !=''">
+				#{customerId,jdbcType=VARCHAR},
 			</if>
 			<if test="customerComment != null and customerComment !=''">
 				#{customerComment,jdbcType=VARCHAR},
@@ -92,8 +92,8 @@
 			<if test="customerPhone != null and customerPhone !=''">
 				customer_phone= #{customerPhone,jdbcType=VARCHAR},
 			</if>
-			<if test="customerId != null">
-				customer_id= #{customerId,jdbcType=INTEGER},
+			<if test="customerId != null and customerId !=''">
+				customer_id= #{customerId,jdbcType=VARCHAR},
 			</if>
 			<if test="customerComment != null and customerComment !=''">
 				customer_comment= #{customerComment,jdbcType=VARCHAR},
