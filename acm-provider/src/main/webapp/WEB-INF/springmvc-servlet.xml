@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
     <!-- 自动搜索@Controller标注的类 -->
-    <context:component-scan base-package="cn.aegisa.acm.web" use-default-filters="false">
+    <context:component-scan base-package="cn.aegisa.acm.web,cn.aegisa.acm.socket" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 

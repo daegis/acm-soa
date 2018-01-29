@@ -1,37 +1,49 @@
-<#-- @ftlvariable name="customer" type="com.hnair.consumer.user.model.Customers" -->
+<#-- @ftlvariable name="userId" type="java.lang.String" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>我爱大爽</title>
+    <title>测试页面</title>
 </head>
+<script src="/js/jquery-3.3.1.js"></script>
 <body>
-body内容
+websocket demo
 <hr>
-我爱~:<#if name??>${name}</#if>
-
-<#if customer??>
-    <#if customer.address??>
-        ${customer.address}<br>
-    </#if>
-
-    <#if customer.cid??>
-        ${customer.cid}<br>
-    </#if>
-
-    <#if customer.idNumber??>
-        ${customer.idNumber}<br>
-    </#if>
-
-    <#if customer.mobile??>
-        ${customer.mobile}<br>
-    </#if>
-
-    <#if customer.name??>
-        ${customer.name}<br>
-    </#if>
-
-
+<#if userId??>
+    我的用户id是:${userId}
+<#else>
+未传入userId
 </#if>
+<hr>
+<table border="1">
+    <tr style="height: 600px">
+        <td style="width: 800px">
+            <div id="messageArea"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input id="inputBox" title="老铁">
+            <button id="btn">点我提交</button>
+        </td>
+    </tr>
+</table>
+<script>
+    var socket = new WebSocket('ws://localhost:8080/socket/${userId}');
+    $(function () {
+        socket.onopen = function () {
+            socket.send('${userId}已上线');
+        };
+        //  socket.send('啦啦啦我发了一个消息');
+        $('#btn').click(function () {
+            var message = $('#inputBox').val();
+            $('#inputBox').val('');
+            socket.send(message);
+        });
+        socket.onmessage = function (receive) {
+            $('#messageArea').append("<br>").append(receive.data);
+        };
+    })
+</script>
 </body>
 </html>

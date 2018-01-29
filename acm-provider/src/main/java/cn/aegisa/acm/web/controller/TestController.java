@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -25,7 +26,14 @@ public class TestController {
     private ICommonService service;
 
     @RequestMapping("/01/{id}")
+    @ResponseBody
     public String test01(@PathVariable Integer id, Model model) {
-        return null;
+        return "123";
+    }
+
+    @RequestMapping("/socket/{userId}")
+    public String directToPage(@PathVariable String userId, Model model) {
+        model.addAttribute("userId", userId);
+        return "test";
     }
 }
